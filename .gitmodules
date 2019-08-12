@@ -1,0 +1,3 @@
+[submodule "twilio-data"]
+	path = twilio-data
+	url = git@github.com:cityouthconference/twilio-data.git
