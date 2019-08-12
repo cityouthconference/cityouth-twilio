@@ -24,6 +24,7 @@ To test locally, tunnel application using ngrok: https://ngrok.com/
 This development setup requires that you have `git` installed on your machine. For installation go to: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
 Clone the repository
+
 `git clone git@github.com:cityouthconference/cityouth-twilio.git`
 
 ... To be continued
