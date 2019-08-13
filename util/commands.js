@@ -4,16 +4,16 @@ var fs = require('fs');
 var ACCOUNT_SID = process.env.ACCOUNT_SID;
 var AUTH_TOKEN = process.env.AUTH_TOKEN
 var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
-var adminFile = './data/admin.json';
-var leaderPhoneNumberFile = './data/leaderphonenumbers.json';
-var servingPhoneNumberFile = './data/servingphonenumbers.json';
-var phoneNumberFile = './data/phonenumbers.json';
-var scheduleFile = './data/schedule.csv';
-var teamsFile = './data/teams.json';
-var pointsFile = './data/points.json';
-var backupPointsFile = './data/points_backup.json';
-var helpFile = './data/help.json';
-var questionsFile = './data/questions.json';
+var adminFile = './twilio-data/admin.json';
+var leaderPhoneNumberFile = './twilio-data/leaderphonenumbers.json';
+var servingPhoneNumberFile = './twilio-data/servingphonenumbers.json';
+var phoneNumberFile = './twilio-data/phonenumbers.json';
+var scheduleFile = './twilio-data/schedule.csv';
+var teamsFile = './twilio-data/teams.json';
+var pointsFile = './twilio-data/points.json';
+var backupPointsFile = './twilio-data/points_backup.json';
+var helpFile = './twilio-data/help.json';
+var questionsFile = './twilio-data/questions.json';
 
 var client = new twilio.RestClient(ACCOUNT_SID, AUTH_TOKEN);
 
@@ -35,8 +35,7 @@ var hi = function(param, phoneNumber){
       \nevent \nnextevent \npoints \nteam \nquestion \nadmin \
       \n\nIf you need help, type 'help' followed by the command."
     );
-  }
-  else if(param.length == 1 && param[0].toLowerCase() == 'admin'){
+  } else if(param.length == 1 && param[0].toLowerCase() == 'admin'){
     resp.message(
       "Hello! Type one of these available commands: \n\naddpoints \naddnumber \
       \nremovenumber \naddadmin \nremoveadmin \nsendmessage \nsendadminmessage \nsendleadermessage \nsendServingMessage\

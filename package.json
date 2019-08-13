@@ -1,6 +1,6 @@
 {
   "name": "cityouthtwilio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "node server using twilio api",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cityouthconference/cityouthtwilio.git"
+    "url": "git+https://github.com/cityouthconference/cityouth-twilio.git"
   },
   "keywords": [
     "twilio",
@@ -19,13 +19,13 @@
   "author": "Cityouth",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cityouthconference/cityouthtwilio/issues"
+    "url": "https://github.com/cityouthconference/cityouth-twilio/issues"
   },
-  "homepage": "https://github.com/cityouthconference/cityouthtwilio#readme",
+  "homepage": "https://github.com/cityouthconference/cityouth-twilio#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "nodemon": "^1.9.2",
-    "twilio": "^2.9.1"
+    "twilio": "^3.33.3"
   }
 }
