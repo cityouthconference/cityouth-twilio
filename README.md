@@ -21,7 +21,7 @@ To test locally, tunnel application using ngrok: https://ngrok.com/
 
 ## Development Setup
 
-This development setup requires that you have `git` installed on your machine. For installation go to: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+This development setup requires that you have `git` and `npm` installed on your machine. For installation go to: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git and https://nodejs.org/en/. If you are on macOS, `npm` can be installed with Homebrew: `brew install npm`
 
 Clone the repository
 
