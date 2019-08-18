@@ -6,10 +6,10 @@ var app = express();
 var port = process.env.PORT || 8080;
 var util = require('./util/util.js');
 
-var adminFile = './data/admin.json';
-var pointsFile = './data/points.json';
-var teamsFile = './data/teams.json';
-var questionsFile = './data/questions.json';
+var adminFile = './twilio-data/admin.json';
+var pointsFile = './twilio-data/points.json';
+var teamsFile = './twilio-data/teams.json';
+var questionsFile = './twilio-data/questions.json';
 
 var password = 'cityc16!'; // used for receiving/answering questions
 

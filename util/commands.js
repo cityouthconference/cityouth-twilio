@@ -1,23 +1,25 @@
-var twilio = require('twilio');
-var fs = require('fs');
+const twilio = require('twilio');
+const fs = require('fs');
 
-var ACCOUNT_SID = process.env.ACCOUNT_SID;
-var AUTH_TOKEN = process.env.AUTH_TOKEN
-var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
-var adminFile = './twilio-data/admin.json';
-var leaderPhoneNumberFile = './twilio-data/leaderphonenumbers.json';
-var servingPhoneNumberFile = './twilio-data/servingphonenumbers.json';
-var phoneNumberFile = './twilio-data/phonenumbers.json';
-var scheduleFile = './twilio-data/schedule.csv';
-var teamsFile = './twilio-data/teams.json';
-var pointsFile = './twilio-data/points.json';
-var backupPointsFile = './twilio-data/points_backup.json';
-var helpFile = './twilio-data/help.json';
-var questionsFile = './twilio-data/questions.json';
+const MessagingResponse = twilio.twiml.MessagingResponse;
 
-var client = new twilio.RestClient(ACCOUNT_SID, AUTH_TOKEN);
+const ACCOUNT_SID = process.env.ACCOUNT_SID;
+const AUTH_TOKEN = process.env.AUTH_TOKEN
+const TWILIO_NUMBER = process.env.TWILIO_NUMBER;
+const adminFile = './twilio-data/admin.json';
+const leaderPhoneNumberFile = './twilio-data/leaderphonenumbers.json';
+const servingPhoneNumberFile = './twilio-data/servingphonenumbers.json';
+const phoneNumberFile = './twilio-data/phonenumbers.json';
+const scheduleFile = './twilio-data/schedule.csv';
+const teamsFile = './twilio-data/teams.json';
+const pointsFile = './twilio-data/points.json';
+const backupPointsFile = './twilio-data/points_backup.json';
+const helpFile = './twilio-data/help.json';
+const questionsFile = './twilio-data/questions.json';
 
-var phoneNumberRegex = /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
+const client = twilio(ACCOUNT_SID, AUTH_TOKEN);
+
+const phoneNumberRegex = /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
 
 /*
   These are the main functions that will run the commands the user inputs.
@@ -28,7 +30,7 @@ var phoneNumberRegex = /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][
 */
 
 var hi = function(param, phoneNumber){
-  resp = new twilio.TwimlResponse();
+  const resp = new MessagingResponse();
   if (param.length == 0) {
     resp.message(
       "Hello! Type one of these available commands:\n \
@@ -53,7 +55,7 @@ var hi = function(param, phoneNumber){
 
 var admin = function(param, phoneNumber){
   console.log('admin function');
-  resp = new twilio.TwimlResponse();
+  const resp = new MessagingResponse();
 
   if (!isAdmin(phoneNumber)) {
     resp.message('Sorry, you are not an admin.');
@@ -66,7 +68,7 @@ var admin = function(param, phoneNumber){
 
 var getPoints = function(param) {
   console.log('getting points', param);
-  resp = new twilio.TwimlResponse();
+  const resp = new MessagingResponse();
   var obj = JSON.parse(fs.readFileSync(pointsFile, 'utf8'));
 
   if(param.length == 1){
@@ -96,7 +98,7 @@ var getPoints = function(param) {
 
 var addPoints = function(param, phoneNumber) {
   console.log('adding points', param);
-  resp = new twilio.TwimlResponse();
+  const resp = new MessagingResponse();
   var obj = JSON.parse(fs.readFileSync(pointsFile, 'utf8'));
   if (!isAdmin(phoneNumber)) {
     resp.message('Sorry, you cannot use this command, since you are not an admin.');
@@ -136,7 +138,7 @@ var addPoints = function(param, phoneNumber) {
 
 var getTeam = function(param) {
   console.log('getting team', param);
-  resp = new twilio.TwimlResponse();
+  const resp = new MessagingResponse();
   var obj = JSON.parse(fs.readFileSync(teamsFile, 'utf8'));
   if (param.length == 0) {
     resp.message('Please type the persons name! Text "team [NAME]"');
@@ -162,7 +164,7 @@ var getTeam = function(param) {
 
 var changeTeamName = function(param, phoneNumber) {
   console.log('getting team', param);
-  resp = new twilio.TwimlResponse();
+  const resp = new MessagingResponse();
   if (!isAdmin(phoneNumber)) {
     resp.message('Sorry, you cannot use this command, since you are not an admin.');
   }
@@ -197,7 +199,7 @@ var changeTeamName = function(param, phoneNumber) {
 
 // adds phone numbers as admin
 var addAdmin = function(param, phoneNumber) {
-  resp = new twilio.TwimlResponse();
+  const resp = new MessagingResponse();
   var obj = JSON.parse(fs.readFileSync(adminFile, 'utf8'));
   console.log(obj);
   var admins = obj.ADMIN;
@@ -232,7 +234,7 @@ var addAdmin = function(param, phoneNumber) {
 
 // removes phone numbers that are admins
 var removeAdmin = function(param, phoneNumber) {
-  resp = new twilio.TwimlResponse();
+  const resp = new MessagingResponse();
   var obj = JSON.parse(fs.readFileSync(adminFile, 'utf8'));
   console.log(obj);
   var admins = obj.ADMIN;
@@ -267,7 +269,7 @@ var removeAdmin = function(param, phoneNumber) {
 
 // sends a global message to everyone subscribed
 var sendMessage = function(param, phoneNumber) {
-  resp = new twilio.TwimlResponse();
+  const resp = new MessagingResponse();
   if (!isAdmin(phoneNumber)) {
     resp.message('Sorry, you cannot use this command, since you are not an admin.');
   } else if (param.length == 0) {
@@ -299,7 +301,7 @@ var sendMessage = function(param, phoneNumber) {
 
 // sends a global message to team leaders subscribed
 var sendLeaderMessage = function(param, phoneNumber) {
-  resp = new twilio.TwimlResponse();
+  const resp = new MessagingResponse();
   if (!isAdmin(phoneNumber)) {
     resp.message('Sorry, you cannot use this command, since you are not an admin.');
   } else if (param.length == 0) {
@@ -331,7 +333,7 @@ var sendLeaderMessage = function(param, phoneNumber) {
 
 // sends a global message to serving team subscribed
 var sendServingMessage = function(param, phoneNumber) {
-  resp = new twilio.TwimlResponse();
+  resp = new MessagingResponse();
   if (!isAdmin(phoneNumber)) {
     resp.message('Sorry, you cannot use this command, since you are not an admin.');
   } else if (param.length == 0) {
@@ -363,7 +365,7 @@ var sendServingMessage = function(param, phoneNumber) {
 
 // sends a global message to admins subscribed
 var sendAdminMessage = function(param, phoneNumber) {
-  resp = new twilio.TwimlResponse();
+  resp = new MessagingResponse();
   if (!isAdmin(phoneNumber)) {
     resp.message('Sorry, you cannot use this command, since you are not an admin.');
   } else if (param.length == 0) {
@@ -395,7 +397,7 @@ var sendAdminMessage = function(param, phoneNumber) {
 
 // adds phone numbers to phonenumbers.json
 var addNumber = function(param, phoneNumber) {
-  resp = new twilio.TwimlResponse();
+  resp = new MessagingResponse();
   var obj = JSON.parse(fs.readFileSync(phoneNumberFile, 'utf8'));
   var numberList = obj.PHONE_NUMBERS;
   if (param.length == 0){
@@ -426,7 +428,7 @@ var addNumber = function(param, phoneNumber) {
 
 // remove phone numbers from phonenumbers.json
 var removeNumber = function(param, phoneNumber) {
-  resp = new twilio.TwimlResponse();
+  resp = new MessagingResponse();
   var obj = JSON.parse(fs.readFileSync(phoneNumberFile, 'utf8'));
   console.log(obj);
   var numberList = obj.PHONE_NUMBERS;
@@ -458,7 +460,7 @@ var removeNumber = function(param, phoneNumber) {
 }
 
 var help = function(param, phoneNumber) {
-  resp = new twilio.TwimlResponse();
+  resp = new MessagingResponse();
   if(param.length == 1 && param[0].toLowerCase() == 'admin'){
     resp.message(
       "Hello! Type one of these available commands: \naddpoints \naddnumber \
@@ -478,7 +480,7 @@ var help = function(param, phoneNumber) {
 
 var test = function(param){
     console.log('getting current event', param);
-    resp = new twilio.TwimlResponse();
+    resp = new MessagingResponse();
 
     resp.message('This is a test')
     return resp.toString();
@@ -486,7 +488,7 @@ var test = function(param){
 
 var getEvent = function(param){
     console.log('getting current event', param);
-    resp = new twilio.TwimlResponse();
+    resp = new MessagingResponse();
 
     var obj = getScheduleJson();
     var event = '';
@@ -546,7 +548,7 @@ var getEvent = function(param){
 
 var getNextEvent = function(param){
     console.log('getting next event', param);
-    resp = new twilio.TwimlResponse();
+    resp = new MessagingResponse();
 
     var day = getDay();
     var time = getTime();
@@ -582,7 +584,7 @@ var getScheduleJson = function(){
 }
 
 var askQuestion = function(param, phoneNumber) {
-  resp = new twilio.TwimlResponse();
+  resp = new MessagingResponse();
   if (param.length == 0) {
     resp.message("Sorry, we didn\'t quite get your question, please ask again! Make sure you\
       text 'question' followed by your question.");
@@ -644,7 +646,7 @@ function getTeamLeaders(){
 
 function sendTextMessage(message, phoneNumber) {
 
-  client.sendMessage({
+  client.messages.create({
 
     to: phoneNumber, // Any number Twilio can deliver to
     from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
