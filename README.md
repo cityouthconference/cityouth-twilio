@@ -4,16 +4,15 @@ A SMS based application (using [Twilio](https://www.twilio.com/)) that automatic
 Currently running on Heroku: https://cityouth-conference.herokuapp.com/
 
 ## Requirements
-- 'event' :  Get the upcoming event
-- 'hint [GAME_NAME]' : Get hints for certain activities
-- 'team [NAME]' : Get team
-- 'points [TEAM_NAME]' : Get current teams points
-- 'verse [BIBLE_VERSE]' : Get bible verse?
-- 'text [MESSAGE]' : Text one of the serving members
-- 'help' : gives the list of commands that are available
-- 'addadmin [PHONE_NUMBER]': add phone number to admin list
-- 'removeadmin [PHONE_NUMBER]': removes phone number from admin list
-- 'sendmessage [MESSAGE]': sends a global message to everyone subscribed
+- `event` :  Get the upcoming event
+- `hint [GAME_NAME]` : Get hints for certain activities
+- `team [NAME]` : Get team
+- `points [TEAM_NAME]` : Get current teams points
+- `text [MESSAGE]` : Text one of the serving members
+- `hi` : gives the list of commands that are available
+- `sendmessage [MESSAGE]`: sends a global message to everyone subscribed
+
+A full list of currently implemented commands can be viewed [here](https://github.com/cityouthconference/cityouth-twilio/blob/master/util/util.js#L7)
 
 ### Things to work on
 - making commands case insensitive
@@ -38,7 +37,8 @@ export AUTH_TOKEN=...
 export TWILIO_NUMBER=...
 ```
 
-Start the node application, the output should appear as the following
+Start the node application with `npm start` in the root directory, the output should appear as the following:
+
 ```bash
 ➜  cityouth-twilio git:(master) npm start
 
